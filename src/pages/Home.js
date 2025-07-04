@@ -272,36 +272,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      {/* Newsletter Section */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-8 lg:p-12 text-center text-white">
-            <h2 className="text-3xl font-bold mb-4">Stay Updated</h2>
-            <p className="text-blue-100 mb-8 max-w-2xl mx-auto">
-              Subscribe to our newsletter and be the first to know about new arrivals, exclusive offers, and design
-              tips.
-            </p>
-
-            <form className="max-w-md mx-auto flex gap-4">
-              <input
-                type="email"
-                placeholder="Enter your email address"
-                className="flex-1 px-4 py-3 rounded-xl text-gray-900 focus:outline-none focus:ring-4 focus:ring-white/30"
-                required
-              />
-              <button
-                type="submit"
-                className="bg-white text-blue-600 px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors duration-200"
-              >
-                Subscribe
-              </button>
-            </form>
-
-            <p className="text-xs text-blue-100 mt-4">We respect your privacy. Unsubscribe at any time.</p>
-          </div>
-        </div>
-      </section>
     </div>
   )
 }

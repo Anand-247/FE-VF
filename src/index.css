@@ -336,11 +336,11 @@
 /* Enhanced Dark Mode Support */
 @media (prefers-color-scheme: dark) {
   .card {
-    @apply bg-gray-800 border-gray-700 text-white;
+    @apply bg-gray-100 border text-gray-700;
   }
 
   .input-field {
-    @apply bg-gray-800 border-gray-600 text-white;
+    @apply bg-gray-100 border text-gray-700;
   }
 }
 

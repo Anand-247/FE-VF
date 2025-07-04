@@ -70,14 +70,14 @@ const ProductCard = ({ product }) => {
         <img
           src={product.images?.[0]?.url || "/placeholder.svg?height=300&width=300"}
           alt={product.name}
-          className={`w-full h-full object-cover transition-all duration-500 group-hover:scale-105 h-50 ${
+          className={`w-full h-[150px] md:h-[250px] object-cover transition-all duration-500 group-hover:scale-105 h-50 ${
             isImageLoaded ? "opacity-100" : "opacity-0"
           }`}
           onLoad={() => setIsImageLoaded(true)}
           loading="lazy"
         />
 
-        <div className="h-50">
+        <div className="h-auto">
           {/* Badges */}
           <div className="absolute top-3 left-3 flex flex-col gap-2">
             {product.featured && (
@@ -103,7 +103,7 @@ const ProductCard = ({ product }) => {
           </div>
 
           {/* Action Buttons */}
-          <div
+          {/* <div
             className={`absolute top-3 right-3 flex flex-col gap-2 transition-all duration-300 ${
               isHovered ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4"
             }`}
@@ -125,7 +125,7 @@ const ProductCard = ({ product }) => {
             >
               <Eye size={16} />
             </button>
-          </div>
+          </div> */}
 
           {/* Overlay for out of stock */}
           {product.stock === 0 && (
@@ -137,7 +137,7 @@ const ProductCard = ({ product }) => {
       </Link>
 
       {/* Product Info */}
-      <div className="p-4">
+      <div className="p-2 md:p-4">
         {/* Category */}
         {product.category && (
           <p className="text-xs text-blue-600 font-medium mb-1 uppercase tracking-wide">{product.category.name}</p>
@@ -151,7 +151,7 @@ const ProductCard = ({ product }) => {
         </Link>
 
         {/* Rating */}
-        <div className="flex items-center gap-2 mb-2">
+        {/* <div className="flex items-center gap-2 mb-2">
           <div className="flex items-center">
             {[...Array(5)].map((_, i) => (
               <Star
@@ -164,7 +164,7 @@ const ProductCard = ({ product }) => {
             ))}
           </div>
           <span className="text-sm text-gray-500">({reviewCount})</span>
-        </div>
+        </div> */}
 
         {/* Price */}
         <div className="flex items-center gap-2 mb-3">
@@ -192,7 +192,7 @@ const ProductCard = ({ product }) => {
         <button
           onClick={handleAddToCart}
           disabled={product.stock === 0}
-          className={`w-full py-2.5 px-4 rounded-xl font-semibold text-sm transition-all duration-300 flex items-center justify-center gap-2 ${
+          className={`w-full py-2 px-4 rounded-xl font-semibold text-xs md:text-sm transition-all duration-300 flex items-center justify-center gap-2 ${
             product.stock === 0
               ? "bg-gray-100 text-gray-400 cursor-not-allowed"
               : isInCart(product._id)

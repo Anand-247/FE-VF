@@ -542,7 +542,7 @@ const ProductDetail = () => {
                   <img
                     src={product.images?.[0]?.url || "/placeholder.svg?height=60&width=60"}
                     alt={product.name}
-                    className="w-15 h-15 object-cover rounded-lg"
+                    className="w-16 h-16 object-cover rounded-lg"
                   />
                   <div className="flex-1">
                     <h3 className="font-medium text-gray-900">{product.name}</h3>

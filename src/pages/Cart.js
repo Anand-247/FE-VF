@@ -16,10 +16,6 @@ const Cart = () => {
   const [showCheckoutForm, setShowCheckoutForm] = useState(false)
   const [settings, setSettings] = useState({})
 
-  useState(() => {
-    fetchSettings()
-  }, [])
-
   const fetchSettings = async () => {
     try {
       const response = await settingsAPI.getPublic()
@@ -28,6 +24,10 @@ const Cart = () => {
       console.error("Error fetching settings:", error)
     }
   }
+
+  useState(() => {
+    fetchSettings()
+  }, [])
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat("en-IN", {
@@ -83,34 +83,34 @@ const Cart = () => {
         <div className="lg:col-span-2">
           <div className="space-y-4">
             {items.map((item) => (
-              <div key={item.product._id} className="card p-4">
+              <div key={item._id} className="border rounded-xl p-4">
                 <div className="flex items-center space-x-4">
-                  <img
+                  {/* <img
                     src={item.product.images?.[0]?.url || "/placeholder.svg?height=100&width=100"}
                     alt={item.product.name}
                     className="w-20 h-20 object-cover rounded-lg"
-                  />
+                  /> */}
 
                   <div className="flex-1">
                     <h3 className="font-semibold text-gray-800 mb-1">
-                      <Link to={`/product/${item.product.slug}`} className="hover:text-amber-600 transition-colors">
-                        {item.product.name}
+                      <Link to={`/product/${item.slug}`} className="hover:text-amber-600 transition-colors">
+                        {item.name}
                       </Link>
                     </h3>
-                    <p className="text-gray-600 text-sm mb-2">{item.product.category?.name}</p>
-                    <p className="font-semibold text-amber-600">{formatPrice(item.product.price)}</p>
+                    <p className="text-gray-600 text-sm mb-2">{item.category?.name}</p>
+                    <p className="font-semibold text-amber-600">{formatPrice(item.price)}</p>
                   </div>
 
                   <div className="flex items-center space-x-3">
                     <button
-                      onClick={() => updateQuantity(item.product._id, item.quantity - 1)}
+                      onClick={() => updateQuantity(item._id, item.quantity - 1)}
                       className="w-8 h-8 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50"
                     >
                       <Minus size={14} />
                     </button>
                     <span className="w-12 text-center font-medium">{item.quantity}</span>
                     <button
-                      onClick={() => updateQuantity(item.product._id, item.quantity + 1)}
+                      onClick={() => updateQuantity(item._id, item.quantity + 1)}
                       className="w-8 h-8 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50"
                     >
                       <Plus size={14} />
@@ -119,9 +119,9 @@ const Cart = () => {
 
                   <div className="text-right">
                     <p className="font-semibold text-gray-800 mb-2">
-                      {formatPrice(item.product.price * item.quantity)}
+                      {formatPrice(item.price * item.quantity)}
                     </p>
-                    <button
+                    <button 
                       onClick={() => removeFromCart(item.product._id)}
                       className="text-red-500 hover:text-red-700 transition-colors"
                     >
@@ -194,11 +194,11 @@ const Cart = () => {
                 <h3 className="font-medium text-gray-800 mb-2">Order Summary</h3>
                 <div className="space-y-1 text-sm">
                   {items.map((item) => (
-                    <div key={item.product._id} className="flex justify-between">
+                    <div key={item._id} className="flex justify-between">
                       <span>
-                        {item.product.name} × {item.quantity}
+                        {item.name} × {item.quantity}
                       </span>
-                      <span>{formatPrice(item.product.price * item.quantity)}</span>
+                      <span>{formatPrice(item.price * item.quantity)}</span>
                     </div>
                   ))}
                   <hr className="my-2" />

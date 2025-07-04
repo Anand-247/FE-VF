@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Link, useNavigate, useLocation } from "react-router-dom"
-import { Search, ShoppingCart, Menu, X, User, Heart, ChevronDown } from "lucide-react"
+import { Search, ShoppingCart, Menu, X, ChevronDown, Cross } from "lucide-react"
 import { useCart } from "../context/CartContext"
 import { useUser } from "../context/UserContext"
 import { categoryAPI } from "../utils/api"
@@ -13,6 +13,7 @@ const Header = () => {
   const [searchQuery, setSearchQuery] = useState("")
   const [categories, setCategories] = useState([])
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isSearchVisible, setIsSearchVisible] = useState(false)
 
   const { getCartItemsCount, isLoaded } = useCart()
   const { user } = useUser()
@@ -45,6 +46,7 @@ const Header = () => {
     if (searchQuery.trim()) {
       navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`)
       setSearchQuery("")
+      setIsSearchVisible(false)
     }
   }
 
@@ -64,20 +66,20 @@ const Header = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between py-3">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 group">
             <div className="relative">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-105">
-                <span className="text-white font-bold text-xl">VF</span>
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-105">
+                <span className="text-white font-bold text-sm md:text-xl">VF</span>
               </div>
               <div className="absolute -inset-1 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 rounded-xl blur opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
             </div>
             <div className="flex flex-col">
-              <span className="text-2xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent">
+              <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent">
                 Verma
               </span>
-              <span className="text-xs text-gray-500 font-medium -mt-1 hidden sm:block">Furniture Works</span>
+              <span className="text-xs text-gray-500 font-medium -mt-1">Furniture Works</span>
             </div>
           </Link>
 
@@ -167,7 +169,7 @@ const Header = () => {
             </div>
           </nav>
 
-          {/* Search Bar */}
+          {/* Desktop Search */}
           <div className="hidden md:block flex-1 max-w-lg mx-8">
             <form onSubmit={handleSearch} className="relative group">
               <div className="relative">
@@ -189,21 +191,17 @@ const Header = () => {
 
           {/* Right Actions */}
           <div className="flex items-center space-x-2">
-            {/* User Account */}
-            <Link
-              to={user ? "/account" : "/login"}
-              className="hidden sm:flex items-center justify-center w-11 h-11 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-300 group"
+            {/* Search Icon */}
+            <button
+              onClick={() => {
+                setIsSearchVisible((prev) => !prev)
+                setIsCategoriesOpen(false)
+                setIsMenuOpen(false)
+              }}
+              className="flex items-center justify-center w-11 h-11 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-300 group"
             >
-              <User size={20} className="group-hover:scale-110 transition-transform duration-300" />
-            </Link>
-
-            {/* Wishlist */}
-            <Link
-              to="/wishlist"
-              className="hidden sm:flex items-center justify-center w-11 h-11 text-gray-600 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all duration-300 group"
-            >
-              <Heart size={20} className="group-hover:scale-110 transition-transform duration-300" />
-            </Link>
+              {isSearchVisible ? <X size={20} className="group-hover:scale-110 translate-transform duration-300" /> : <Search size={20} className="group-hover:scale-110 transition-transform duration-300" />}
+            </button>
 
             {/* Cart */}
             <Link
@@ -212,48 +210,38 @@ const Header = () => {
             >
               <ShoppingCart size={20} className="group-hover:scale-110 transition-transform duration-300" />
               {cartItemsCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shadow-lg animate-pulse">
+                <span className="absolute md:-top-2 md:-right-2 top-0 right-0 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold rounded-full w-5 h-5 md:w-6 md:h-6 flex items-center justify-center shadow-lg animate-pulse">
                   {cartItemsCount > 99 ? "99+" : cartItemsCount}
                 </span>
               )}
             </Link>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="lg:hidden flex items-center justify-center w-11 h-11 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-300 group"
-            >
-              {isMenuOpen ? (
-                <X size={20} className="group-hover:scale-110 transition-transform duration-300" />
-              ) : (
-                <Menu size={20} className="group-hover:scale-110 transition-transform duration-300" />
-              )}
-            </button>
           </div>
         </div>
-
-        {/* Mobile Search */}
-        <div className="md:hidden pb-4">
-          <form onSubmit={handleSearch} className="relative group">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all duration-300 text-sm placeholder-gray-500"
-              />
-              <Search size={18} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            </div>
-          </form>
-        </div>
       </div>
+          {isSearchVisible && (
+            <div className="px-4 pb-4 md:hidden">
+              <form onSubmit={handleSearch} className="group">
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Search products..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-12 pr-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all duration-300 text-sm placeholder-gray-500"
+                  />
+                  <Search
+                    size={18}
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+                  />
+                </div>
+              </form>
+            </div>
+          )}
 
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="lg:hidden bg-white border-t border-gray-100 shadow-lg">
           <div className="px-4 py-6 space-y-6">
-            {/* Mobile Navigation */}
             <nav className="space-y-4">
               {navigation.map((item) => (
                 <Link
@@ -300,32 +288,6 @@ const Header = () => {
               >
                 View All Categories
               </Link>
-            </div>
-
-            {/* Mobile User Actions */}
-            <div className="border-t border-gray-100 pt-6">
-              <div className="grid grid-cols-2 gap-4">
-                <Link
-                  to={user ? "/account" : "/login"}
-                  className="flex items-center justify-center space-x-2 py-3 bg-gray-50 hover:bg-blue-50 rounded-xl transition-all duration-300 group"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <User size={18} className="text-gray-600 group-hover:text-blue-600 transition-colors duration-300" />
-                  <span className="text-sm font-medium text-gray-700 group-hover:text-blue-600 transition-colors duration-300">
-                    Account
-                  </span>
-                </Link>
-                <Link
-                  to="/wishlist"
-                  className="flex items-center justify-center space-x-2 py-3 bg-gray-50 hover:bg-red-50 rounded-xl transition-all duration-300 group"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <Heart size={18} className="text-gray-600 group-hover:text-red-500 transition-colors duration-300" />
-                  <span className="text-sm font-medium text-gray-700 group-hover:text-red-500 transition-colors duration-300">
-                    Wishlist
-                  </span>
-                </Link>
-              </div>
             </div>
           </div>
         </div>
