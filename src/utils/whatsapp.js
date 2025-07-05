@@ -1,39 +1,42 @@
 export const generateWhatsAppMessage = (type, data) => {
-  const { user, items, total, product, quantity } = data
+  const { user, items, total, product, quantity } = data;
+  console.log("WhatsApp Data:", data);
 
-  let message = `Hello! I'm interested in placing an order.\n\n`
+  let message = `*🛒 Hello! I'd like to place an order.*\n\n`;
 
   // Customer details
   if (user) {
-    message += `*Customer Details:*\n`
-    message += `Name: ${user.name}\n`
-    message += `Phone: ${user.phone}\n`
-    message += `Address: ${user.address}\n\n`
+    message += `*👤 Customer Details:*\n`;
+    message += `• Name: ${user.name}\n`;
+    message += `• Phone: ${user.phone}\n`;
+    message += `• Address: ${user.address}\n\n`;
   }
 
-  if (type === "buy_now") {
-    message += `*Product:*\n`
-    message += `${product.name}\n`
-    message += `Price: ₹${product.price}\n`
-    message += `Quantity: ${quantity}\n`
-    message += `Total: ₹${product.price * quantity}\n\n`
-  } else if (type === "cart_checkout") {
-    message += `*Order Details:*\n`
+  if (type === "buy_now" && product) {
+    message += `*🛍️ Product Details:*\n`;
+    message += `• Product: ${product.name}\n`;
+    message += `• Price: ₹${product.price}\n`;
+    message += `• Quantity: ${quantity}\n`;
+    message += `• Total: ₹${product.price * quantity}\n\n`;
+  } else if (type === "cart_checkout" && Array.isArray(items)) {
+    message += `*🛒 Cart Items:*\n`;
+
     items.forEach((item, index) => {
-      message += `${index + 1}. ${item.product.name}\n`
-      message += `   Price: ₹${item.product.price}\n`
-      message += `   Quantity: ${item.quantity}\n`
-      message += `   Subtotal: ₹${item.product.price * item.quantity}\n\n`
-    })
-    message += `*Total Amount: ₹${total}*\n\n`
+      message += `${index + 1}. ${item.name}\n`;
+      message += `   • Price: ₹${item.price}\n`;
+      message += `   • Quantity: ${item.quantity}\n`;
+      message += `   • Subtotal: ₹${item.price * item.quantity}\n\n`;
+    });
+
+    message += `*💰 Total Amount: ₹${total}*\n\n`;
   }
 
-  message += `Please confirm the order and let me know the delivery details.`
+  message += `_Please confirm my order and share the delivery details._`;
 
-  return encodeURIComponent(message)
-}
+  return encodeURIComponent(message);
+};
 
 export const openWhatsApp = (phoneNumber, message) => {
-  const url = `https://wa.me/${phoneNumber}?text=${message}`
-  window.open(url, "_blank")
-}
+  const url = `https://wa.me/${phoneNumber}?text=${message}`;
+  window.open(url, "_blank");
+};

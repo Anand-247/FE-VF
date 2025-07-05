@@ -17,6 +17,7 @@ import {
   Eye,
   ChevronLeft,
   ChevronRight,
+  PhoneCall,
 } from "lucide-react"
 import { useCart } from "../context/CartContext"
 import { useUser } from "../context/UserContext"
@@ -89,15 +90,15 @@ const ProductDetail = () => {
     }
 
     addToCart(product, quantity)
-    toast.success(`${product.name} added to cart!`, {
-      duration: 2000,
-      style: {
-        background: "#10B981",
-        color: "white",
-        borderRadius: "8px",
-        padding: "12px 16px",
-      },
-    })
+    // toast.success(`${product.name} added to cart!`, {
+    //   duration: 2000,
+    //   style: {
+    //     background: "#10B981",
+    //     color: "white",
+    //     borderRadius: "8px",
+    //     padding: "12px 16px",
+    //   },
+    // })
   }
 
   const handleBuyNow = (userData) => {
@@ -189,10 +190,6 @@ const ProductDetail = () => {
           <Link to="/" className="hover:text-gray-900">
             Home
           </Link>
-          <span>/</span>
-          <Link to="/products" className="hover:text-gray-900">
-            Products
-          </Link>
           {product.category && (
             <>
               <span>/</span>
@@ -269,9 +266,9 @@ const ProductDetail = () => {
             {/* Header */}
             <div>
               {product.category && (
-                <p className="text-sm text-gray-500 uppercase tracking-wide mb-2">{product.category.name}</p>
+                <p className="text-xs text-gray-500 uppercase tracking-wide mb-2">{product.category.name}</p>
               )}
-              <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">{product.name}</h1>
+              <h1 className="text-xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">{product.name}</h1>
 
               {/* Rating */}
               {product.rating > 0 && (
@@ -296,7 +293,7 @@ const ProductDetail = () => {
 
             {/* Price */}
             <div className="flex items-center space-x-4">
-              <span className="text-4xl font-bold text-gray-900">{formatPrice(product.price)}</span>
+              <span className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900">{formatPrice(product.price)}</span>
               {product.originalPrice && product.originalPrice > product.price && (
                 <span className="text-xl text-gray-500 line-through">{formatPrice(product.originalPrice)}</span>
               )}
@@ -356,7 +353,7 @@ const ProductDetail = () => {
                   <span>Add to Cart</span>
                 </button>
 
-                <button
+                {/* <button
                   onClick={handleWishlist}
                   className={`p-4 rounded-lg border transition-all duration-200 ${
                     isWishlisted
@@ -372,20 +369,21 @@ const ProductDetail = () => {
                   className="p-4 bg-white border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-50 transition-colors duration-200"
                 >
                   <Share2 size={20} />
-                </button>
+                </button> */}
               </div>
 
               <button
                 onClick={() => setShowUserForm(true)}
                 disabled={!product.inStock}
-                className="w-full bg-green-600 text-white py-4 px-6 rounded-lg font-semibold hover:bg-green-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-green-600 text-white py-4 px-6 rounded-lg font-semibold hover:bg-green-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
               >
-                Buy Now via WhatsApp
+                <PhoneCall size={20} />
+                <span>Buy Now via WhatsApp</span>
               </button>
             </div>
 
             {/* Features */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-gray-200">
+            {/* <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-gray-200">
               {features.map((feature, index) => (
                 <div key={index} className="flex items-center space-x-3">
                   <div className="p-2 bg-gray-100 rounded-lg">
@@ -397,7 +395,7 @@ const ProductDetail = () => {
                   </div>
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -405,7 +403,7 @@ const ProductDetail = () => {
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 mb-16">
           <div className="border-b border-gray-200">
             <nav className="flex space-x-8 px-6">
-              {["description", "specifications", "reviews"].map((tab) => (
+              {["description", "specifications"].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setSelectedTab(tab)}

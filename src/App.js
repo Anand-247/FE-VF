@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom"
 import { Toaster } from "react-hot-toast"
 
 // Components
@@ -17,12 +17,24 @@ import Search from "./pages/Search"
 // Context
 import { CartProvider } from "./context/CartContext"
 import { UserProvider } from "./context/UserContext"
+import { useEffect } from "react"
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 function App() {
   return (
     <UserProvider>
       <CartProvider>
         <Router>
+          <ScrollToTop />
           <div className="min-h-screen bg-gray-50">
             <Header />
             <main className="min-h-screen">
@@ -37,7 +49,7 @@ function App() {
               </Routes>
             </main>
             <Footer />
-            <Toaster position="top-right" />
+            <Toaster position="top-center" />
           </div>
         </Router>
       </CartProvider>

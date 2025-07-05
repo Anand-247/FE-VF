@@ -107,7 +107,7 @@ const Home = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-white">
+      {/* <section className="py-10 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose WoodCraft?</h2>
@@ -131,7 +131,7 @@ const Home = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Categories Section */}
       <section className="py-16 bg-gray-50">
@@ -141,13 +141,13 @@ const Home = () => {
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Shop by Category</h2>
               <p className="text-gray-600">Discover our carefully curated furniture collections</p>
             </div>
-            <Link
+            {/* <Link
               to="/categories"
               className="hidden md:flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-semibold transition-colors duration-200"
             >
               <span>View All</span>
               <ArrowRight size={18} />
-            </Link>
+            </Link> */}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -176,13 +176,13 @@ const Home = () => {
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Featured Products</h2>
               <p className="text-gray-600">Handpicked favorites from our premium collection</p>
             </div>
-            <Link
+            {/* <Link
               to="/products"
               className="hidden md:flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-semibold transition-colors duration-200"
             >
               <span>View All</span>
               <ArrowRight size={18} />
-            </Link>
+            </Link> */}
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -191,7 +191,7 @@ const Home = () => {
             ))}
           </div>
 
-          <div className="text-center mt-8 md:hidden">
+          {/* <div className="text-center mt-8 md:hidden">
             <Link
               to="/products"
               className="inline-flex items-center space-x-2 bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors duration-200"
@@ -199,12 +199,12 @@ const Home = () => {
               <span>View All Products</span>
               <ArrowRight size={18} />
             </Link>
-          </div>
+          </div> */}
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+      {/* <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Trusted by Thousands</h2>
@@ -232,10 +232,10 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Testimonials Section */}
-      <section className="py-16 bg-gray-50">
+      {/* <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">What Our Customers Say</h2>
@@ -271,7 +271,7 @@ const Home = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   )
 }

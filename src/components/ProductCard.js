@@ -29,7 +29,7 @@ const ProductCard = ({ product }) => {
     }
 
     addToCart(product, 1)
-    toast.success(`${product.name} added to cart!`)
+    // toast.success(`${product.name} added to cart!`)
   }
 
   const handleWishlist = (e) => {
@@ -168,9 +168,9 @@ const ProductCard = ({ product }) => {
 
         {/* Price */}
         <div className="flex items-center gap-2 mb-3">
-          <span className="text-lg font-bold text-gray-900">${product.price?.toLocaleString()}</span>
+          <span className="text-lg font-bold text-gray-900">₹{product.price?.toLocaleString()}</span>
           {product.originalPrice && product.originalPrice > product.price && (
-            <span className="text-sm text-gray-500 line-through">${product.originalPrice.toLocaleString()}</span>
+            <span className="text-sm text-gray-500 line-through">₹{product.originalPrice.toLocaleString()}</span>
           )}
         </div>
 

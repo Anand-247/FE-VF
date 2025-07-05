@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const API_BASE_URL = "http://192.168.31.217:5000/api" || process.env.REACT_APP_API_URL || "http://localhost:5000/api"
+const API_BASE_URL = "https://be-vf.onrender.com/api" || "http://192.168.31.217:5000/api" || process.env.REACT_APP_API_URL || "http://localhost:5000/api"
 
 const api = axios.create({
   baseURL: API_BASE_URL,

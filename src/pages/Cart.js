@@ -101,32 +101,33 @@ const Cart = () => {
                     <p className="font-semibold text-amber-600">{formatPrice(item.price)}</p>
                   </div>
 
-                  <div className="flex items-center space-x-3">
-                    <button
-                      onClick={() => updateQuantity(item._id, item.quantity - 1)}
-                      className="w-8 h-8 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50"
-                    >
-                      <Minus size={14} />
-                    </button>
-                    <span className="w-12 text-center font-medium">{item.quantity}</span>
-                    <button
-                      onClick={() => updateQuantity(item._id, item.quantity + 1)}
-                      className="w-8 h-8 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50"
-                    >
-                      <Plus size={14} />
-                    </button>
-                  </div>
-
-                  <div className="text-right">
-                    <p className="font-semibold text-gray-800 mb-2">
-                      {formatPrice(item.price * item.quantity)}
-                    </p>
-                    <button 
-                      onClick={() => removeFromCart(item.product._id)}
-                      className="text-red-500 hover:text-red-700 transition-colors"
-                    >
-                      <Trash2 size={18} />
-                    </button>
+                  <div className="flex-row items-center justify-center relative">
+                      <button 
+                        onClick={() => removeFromCart(item.product._id)}
+                        className="absolute -top-4 -right-2 text-red-500 hover:text-red-700 transition-colors"
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    <div className="text-center">
+                      <p className="font-semibold text-lg text-gray-800 mb-2">
+                        {formatPrice(item.price * item.quantity)}
+                      </p>
+                    </div>
+                    <div className="flex items-center">
+                      <button
+                        onClick={() => updateQuantity(item._id, item.quantity - 1)}
+                        className="w-8 h-8 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50"
+                      >
+                        <Minus size={14} />
+                      </button>
+                      <span className="w-12 text-center font-medium">{item.quantity}</span>
+                      <button
+                        onClick={() => updateQuantity(item._id, item.quantity + 1)}
+                        className="w-8 h-8 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50"
+                      >
+                        <Plus size={14} />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -153,10 +154,10 @@ const Cart = () => {
                 <span className="text-gray-600">Subtotal ({items.length} items)</span>
                 <span className="font-medium">{formatPrice(getCartTotal())}</span>
               </div>
-              <div className="flex justify-between">
+              {/* <div className="flex justify-between">
                 <span className="text-gray-600">Shipping</span>
                 <span className="font-medium text-green-600">Free</span>
-              </div>
+              </div> */}
               <hr />
               <div className="flex justify-between text-lg font-semibold">
                 <span>Total</span>

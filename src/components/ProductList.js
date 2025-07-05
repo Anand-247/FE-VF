@@ -34,7 +34,7 @@ const ProductList = ({ products, loading, title, emptyMessage }) => {
   return (
     <div>
       {title && <h2 className="section-title text-center mb-8">{title}</h2>}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
         {products.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}

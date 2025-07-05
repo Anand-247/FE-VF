@@ -17,7 +17,6 @@ const UserForm = ({ onSubmit, buttonText = "Continue" }) => {
       name: user?.name || "",
       phone: user?.phone || "",
       address: user?.address || "",
-      email: user?.email || "",
     },
   })
 
@@ -40,11 +39,6 @@ const UserForm = ({ onSubmit, buttonText = "Continue" }) => {
           <p>
             <span className="font-medium">Address:</span> {user.address}
           </p>
-          {user.email && (
-            <p>
-              <span className="font-medium">Email:</span> {user.email}
-            </p>
-          )}
         </div>
         <div className="flex space-x-3 mt-4">
           <button onClick={() => handleFormSubmit(user)} className="btn-primary flex-1">
@@ -109,26 +103,6 @@ const UserForm = ({ onSubmit, buttonText = "Continue" }) => {
         />
         {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address.message}</p>}
       </div>
-
-      <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-          Email (Optional)
-        </label>
-        <input
-          type="email"
-          id="email"
-          {...register("email", {
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: "Please enter a valid email address",
-            },
-          })}
-          className="input-field"
-          placeholder="Enter your email address"
-        />
-        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
-      </div>
-
       <div className="flex space-x-3">
         <button type="submit" disabled={isSubmitting} className="btn-primary flex-1 disabled:opacity-50">
           {isSubmitting ? "Processing..." : buttonText}

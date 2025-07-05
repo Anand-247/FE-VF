@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Link, useNavigate, useLocation } from "react-router-dom"
-import { Search, ShoppingCart, Menu, X, ChevronDown, Cross } from "lucide-react"
+import { Search, ShoppingCart, Menu, X, ChevronDown } from "lucide-react" // Removed Cross as X is used
 import { useCart } from "../context/CartContext"
 import { useUser } from "../context/UserContext"
 import { categoryAPI } from "../utils/api"
@@ -32,6 +32,12 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  // Close mobile menu or categories dropdown when navigating
+  useEffect(() => {
+    setIsMenuOpen(false);
+    setIsCategoriesOpen(false);
+  }, [location.pathname]);
+
   const fetchCategories = async () => {
     try {
       const response = await categoryAPI.getAll()
@@ -46,7 +52,8 @@ const Header = () => {
     if (searchQuery.trim()) {
       navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`)
       setSearchQuery("")
-      setIsSearchVisible(false)
+      setIsSearchVisible(false) // Hide search bar after search
+      setIsMenuOpen(false); // Close menu if open
     }
   }
 
@@ -76,7 +83,7 @@ const Header = () => {
               <div className="absolute -inset-1 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 rounded-xl blur opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
             </div>
             <div className="flex flex-col">
-              <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent">
+              <span className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900"> {/* Changed text-gray-400 to text-gray-900 for better visibility */}
                 Verma
               </span>
               <span className="text-xs text-gray-500 font-medium -mt-1">Furniture Works</span>
@@ -170,7 +177,7 @@ const Header = () => {
           </nav>
 
           {/* Desktop Search */}
-          <div className="hidden md:block flex-1 max-w-lg mx-8">
+          <div className="hidden lg:block flex-1 max-w-lg mx-8"> {/* Changed md:block to lg:block to align with lg:flex nav */}
             <form onSubmit={handleSearch} className="relative group">
               <div className="relative">
                 <input
@@ -189,16 +196,16 @@ const Header = () => {
             </form>
           </div>
 
-          {/* Right Actions */}
+          {/* Right Actions & Hamburger */}
           <div className="flex items-center space-x-2">
-            {/* Search Icon */}
+            {/* Search Icon (visible on mobile/tablet) */}
             <button
               onClick={() => {
                 setIsSearchVisible((prev) => !prev)
                 setIsCategoriesOpen(false)
-                setIsMenuOpen(false)
+                setIsMenuOpen(false) // Close mobile menu if open when search is toggled
               }}
-              className="flex items-center justify-center w-11 h-11 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-300 group"
+              className="lg:hidden flex items-center justify-center w-11 h-11 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-300 group"
             >
               {isSearchVisible ? <X size={20} className="group-hover:scale-110 translate-transform duration-300" /> : <Search size={20} className="group-hover:scale-110 transition-transform duration-300" />}
             </button>
@@ -210,90 +217,103 @@ const Header = () => {
             >
               <ShoppingCart size={20} className="group-hover:scale-110 transition-transform duration-300" />
               {cartItemsCount > 0 && (
-                <span className="absolute md:-top-2 md:-right-2 top-0 right-0 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold rounded-full w-5 h-5 md:w-6 md:h-6 flex items-center justify-center shadow-lg animate-pulse">
+                <span className="absolute -top-1 -right-1 md:-top-2 md:-right-2 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-lg animate-pulse">
                   {cartItemsCount > 99 ? "99+" : cartItemsCount}
                 </span>
               )}
             </Link>
+
+            {/* Hamburger Menu Icon (visible on mobile/tablet) */}
+            <button
+              onClick={() => {
+                setIsMenuOpen(!isMenuOpen)
+                setIsCategoriesOpen(false) // Close categories if open when menu is toggled
+                setIsSearchVisible(false) // Hide search bar if open when menu is toggled
+              }}
+              className="lg:hidden flex items-center justify-center w-11 h-11 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-300"
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
         </div>
       </div>
-          {isSearchVisible && (
-            <div className="px-4 pb-4 md:hidden">
-              <form onSubmit={handleSearch} className="group">
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="Search products..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all duration-300 text-sm placeholder-gray-500"
-                  />
-                  <Search
-                    size={18}
-                    className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  />
-                </div>
-              </form>
-            </div>
-          )}
 
-      {/* Mobile Menu */}
+      {/* Mobile Search Input (conditionally rendered) */}
+      {isSearchVisible && (
+        <div className="px-4 pb-4 md:hidden"> {/* Only show on md screens and below */}
+          <form onSubmit={handleSearch} className="group">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all duration-300 text-sm placeholder-gray-500"
+              />
+              <Search
+                size={18}
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+              />
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* Mobile Menu Content (conditionally rendered) */}
       {isMenuOpen && (
-        <div className="lg:hidden bg-white border-t border-gray-100 shadow-lg">
-          <div className="px-4 py-6 space-y-6">
-            <nav className="space-y-4">
-              {navigation.map((item) => (
+        <div className="lg:hidden bg-white border-t border-gray-100 shadow-lg py-6 px-4 overflow-auto h-screen">
+          <nav className="space-y-2">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className={`block text-lg font-semibold transition-colors duration-300 ${
+                  location.pathname === item.href ? "text-blue-600" : "text-gray-700 hover:text-blue-600"
+                }`}
+                onClick={() => setIsMenuOpen(false)} // Close menu on item click
+              >
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Mobile Categories */}
+          <div className="border-t border-gray-100 pt-6 mt-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">Categories</h3>
+            <div className="grid grid-cols-2 gap-3">
+              {categories.slice(0, 6).map((category) => (
                 <Link
-                  key={item.name}
-                  to={item.href}
-                  className={`block text-lg font-semibold py-2 transition-colors duration-300 ${
-                    location.pathname === item.href ? "text-blue-600" : "text-gray-700 hover:text-blue-600"
-                  }`}
+                  key={category._id}
+                  to={`/categories/${category.slug}`}
+                  className="flex items-center space-x-3 p-3 bg-gray-50 hover:bg-blue-50 rounded-xl transition-all duration-300 group"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  {item.name}
+                  {category.image?.url && (
+                    <img
+                      src={category.image.url || "/placeholder.svg"}
+                      alt={category.name}
+                      className="w-10 h-10 rounded-lg object-cover"
+                    />
+                  )}
+                  <span className="text-sm font-medium text-gray-700 group-hover:text-blue-600 transition-colors duration-300">
+                    {category.name}
+                  </span>
                 </Link>
               ))}
-            </nav>
-
-            {/* Mobile Categories */}
-            <div className="border-t border-gray-100 pt-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Categories</h3>
-              <div className="grid grid-cols-2 gap-3">
-                {categories.slice(0, 6).map((category) => (
-                  <Link
-                    key={category._id}
-                    to={`/categories/${category.slug}`}
-                    className="flex items-center space-x-3 p-3 bg-gray-50 hover:bg-blue-50 rounded-xl transition-all duration-300 group"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {category.image?.url && (
-                      <img
-                        src={category.image.url || "/placeholder.svg"}
-                        alt={category.name}
-                        className="w-10 h-10 rounded-lg object-cover"
-                      />
-                    )}
-                    <span className="text-sm font-medium text-gray-700 group-hover:text-blue-600 transition-colors duration-300">
-                      {category.name}
-                    </span>
-                  </Link>
-                ))}
-              </div>
-              <Link
-                to="/categories"
-                className="block mt-4 text-center py-3 text-sm font-semibold text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-xl transition-all duration-300"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                View All Categories
-              </Link>
             </div>
+            {/* <Link
+              to="/categories"
+              className="block mt-4 text-center py-3 text-sm font-semibold text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-xl transition-all duration-300"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              View All Categories
+            </Link> */}
           </div>
         </div>
       )}
 
-      {/* Categories Dropdown Overlay */}
+      {/* Categories Dropdown Overlay (for desktop) */}
       {isCategoriesOpen && (
         <div className="fixed inset-0 z-40 bg-black/10 backdrop-blur-sm" onClick={() => setIsCategoriesOpen(false)} />
       )}
