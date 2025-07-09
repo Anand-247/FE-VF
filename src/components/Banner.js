@@ -5,11 +5,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Play,
-  Pause,
-  ArrowRight,
-  Star,
-  Sparkles,
-  ShoppingBag
+  Pause
 } from "lucide-react"
 import { bannerAPI } from "../utils/api"
 
@@ -37,45 +33,48 @@ const Banner = () => {
       }, 80)
       return () => clearInterval(timer)
     }
-  }, [banners.length, isAutoPlaying])
+  }, [banners.length, isAutoPlaying, currentSlide])
 
   const fetchBanners = async () => {
     try {
+      // Simulate API call - replace with actual API call
       const response = await bannerAPI.getAll()
       setBanners(response.data || [])
+      
+      // Mock data for demonstration
+      // setBanners([
+      //   {
+      //     _id: "1",
+      //     title: "Premium Wooden Furniture",
+      //     description: "Transform your space with our exquisite collection of handcrafted wooden furniture",
+      //     image: { url: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1400&h=800&fit=crop" },
+      //     isActive: true,
+      //   },
+      //   {
+      //     _id: "2",
+      //     title: "Modern Living Solutions",
+      //     description: "Discover furniture that perfectly blends style, comfort, and functionality",
+      //     image: { url: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1400&h=800&fit=crop" },
+      //     isActive: true,
+      //   },
+      //   {
+      //     _id: "3",
+      //     title: "Luxury Bedroom Collection",
+      //     description: "Create your perfect sanctuary with our premium bedroom furniture",
+      //     image: { url: "https://images.unsplash.com/photo-1631079642576-2e3f1c1b8b5e?w=1400&h=800&fit=crop" },
+      //     isActive: true,
+      //   },
+      // ])
     } catch (error) {
       console.error("Error fetching banners:", error)
       setBanners([
         {
           _id: "default-1",
           title: "Premium Wooden Furniture",
-          subtitle: "Handcrafted Excellence",
           description: "Transform your space with our exquisite collection of handcrafted wooden furniture",
-          image: { url: "/placeholder.svg?height=800&width=1400" },
-          buttonText: "Shop Now",
-          buttonLink: "/products",
+          image: { url: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1400&h=800&fit=crop" },
           isActive: true,
-        },
-        {
-          _id: "default-2",
-          title: "Modern Living Solutions",
-          subtitle: "Contemporary Design",
-          description: "Discover furniture that perfectly blends style, comfort, and functionality",
-          image: { url: "/placeholder.svg?height=800&width=1400" },
-          buttonText: "Explore Collection",
-          buttonLink: "/categories",
-          isActive: true,
-        },
-        {
-          _id: "default-3",
-          title: "Luxury Bedroom Sets",
-          subtitle: "Comfort & Elegance",
-          description: "Create your perfect sanctuary with our premium bedroom furniture collection",
-          image: { url: "/placeholder.svg?height=800&width=1400" },
-          buttonText: "View Bedrooms",
-          buttonLink: "/categories/bedroom",
-          isActive: true,
-        },
+        }
       ])
     } finally {
       setLoading(false)
@@ -85,32 +84,40 @@ const Banner = () => {
   const goToSlide = (index) => {
     setCurrentSlide(index)
     setProgress(0)
+    // Temporarily pause autoplay when manually navigating
+    setIsAutoPlaying(false)
+    setTimeout(() => setIsAutoPlaying(true), 3000) // Resume after 3 seconds
   }
 
   const goToPrevious = () => {
-    setCurrentSlide((prev) => (prev - 1 + banners.length) % banners.length)
+    const activeBanners = banners.filter((banner) => banner.isActive !== false)
+    setCurrentSlide((prev) => (prev - 1 + activeBanners.length) % activeBanners.length)
     setProgress(0)
   }
 
   const goToNext = () => {
-    setCurrentSlide((prev) => (prev + 1) % banners.length)
+    const activeBanners = banners.filter((banner) => banner.isActive !== false)
+    setCurrentSlide((prev) => (prev + 1) % activeBanners.length)
     setProgress(0)
   }
 
   const togglePlayPause = () => {
     setIsAutoPlaying(!isAutoPlaying)
+    if (!isAutoPlaying) {
+      setProgress(0)
+    }
   }
 
   if (loading) {
     return (
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-        <div className="relative h-[500px] sm:h-[400px] lg:h-[500px] xl:h-[600px] bg-gradient-to-br from-slate-100 to-slate-200 rounded-3xl overflow-hidden">
+      <div className="w-full max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 mb-8">
+        <div className="relative h-[400px] sm:h-[500px] lg:h-[600px] bg-gradient-to-br from-slate-100 to-slate-200 rounded-3xl overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10"></div>
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center space-y-4">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl mx-auto animate-pulse"></div>
-              <div className="h-6 sm:h-8 bg-slate-300 rounded-lg w-48 sm:w-64 mx-auto animate-pulse"></div>
-              <div className="h-4 bg-slate-300 rounded-lg w-32 sm:w-48 mx-auto animate-pulse"></div>
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl mx-auto animate-pulse"></div>
+              <div className="h-8 bg-slate-300 rounded-lg w-64 mx-auto animate-pulse"></div>
+              <div className="h-4 bg-slate-300 rounded-lg w-48 mx-auto animate-pulse"></div>
             </div>
           </div>
         </div>
@@ -122,25 +129,17 @@ const Banner = () => {
 
   if (!activeBanners.length) {
     return (
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-        <div className="relative h-[500px] sm:h-[400px] lg:h-[500px] xl:h-[600px] bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 rounded-3xl overflow-hidden">
+      <div className="w-full max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 mb-8">
+        <div className="relative h-[400px] sm:h-[500px] lg:h-[600px] bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 rounded-3xl overflow-hidden">
           <div className="absolute inset-0 bg-black/20"></div>
           <div className="absolute inset-0 flex items-center justify-center p-6">
             <div className="text-center text-white max-w-2xl">
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6 border border-white/20">
-                <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span>Welcome to WoodCraft</span>
-              </div>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
                 Premium Wooden Furniture
               </h2>
-              <p className="text-sm sm:text-lg lg:text-xl text-slate-200 mb-6 sm:mb-8 leading-relaxed">
+              <p className="text-lg lg:text-xl text-slate-200 leading-relaxed">
                 Discover our exclusive collection of handcrafted furniture
               </p>
-              <button className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-2xl text-sm sm:text-base">
-                <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span>Shop Now</span>
-              </button>
             </div>
           </div>
         </div>
@@ -149,9 +148,9 @@ const Banner = () => {
   }
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+    <div className="w-full max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 mb-8">
       <div
-        className="relative h-[300px] sm:h-[400px] lg:h-[500px] xl:h-[600px] rounded-3xl overflow-hidden shadow-2xl group"
+        className="relative h-[400px] sm:h-[500px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl group"
         onMouseEnter={() => setIsAutoPlaying(false)}
         onMouseLeave={() => setIsAutoPlaying(true)}
       >
@@ -167,18 +166,18 @@ const Banner = () => {
               }`}
             >
               <img
-                src={banner.image?.url || "/placeholder.svg?height=800&width=1400"}
+                src={banner.image?.url || "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1400&h=800&fit=crop"}
                 alt={banner.title}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-black/60"></div>
             </div>
           ))}
         </div>
 
         {/* Content */}
-        <div className="relative z-10 h-full flex items-center">
-          <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+        <div className="relative z-10 h-full flex mt-10 md:mt-0 md:items-center justify-center">
+          <div className="text-center max-w-4xl mx-auto px-6">
             {activeBanners.map((banner, index) => (
               <div
                 key={banner._id}
@@ -191,41 +190,15 @@ const Banner = () => {
                   display: index === currentSlide ? "block" : "none",
                 }}
               >
-                {/* Subtitle Badge */}
-                {banner.subtitle && (
-                  <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md px-3 py-1.5 rounded-full text-white text-xs sm:text-sm font-medium mb-3 sm:mb-4 border border-white/20">
-                    <Star className="w-3 h-3 sm:w-4 sm:h-4" />
-                    <span>{banner.subtitle}</span>
-                  </div>
-                )}
-
                 {/* Main Title */}
-                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-white mb-3 sm:mb-4 lg:mb-6 leading-tight">
-                  <span className="bg-clip-text ">
-                    {banner.title}
-                  </span>
+                <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight">
+                  {banner.title}
                 </h1>
 
                 {/* Description */}
-                {banner.description && (
-                  <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-slate-200 mb-4 sm:mb-6 lg:mb-8 leading-relaxed max-w-2xl">
-                    {banner.description}
-                  </p>
-                )}
-
-                {/* Action Buttons */}
-                {/* <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                  {banner.buttonText && (
-                    <a
-                      href={banner.buttonLink || "/products"}
-                      className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 sm:px-6 lg:px-8 py-2 sm:py-3 lg:py-4 rounded-2xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-2xl group text-xs sm:text-base"
-                    >
-                      <ShoppingBag className="w-3.5 h-3.5 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
-                      <span>{banner.buttonText}</span>
-                      <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 lg:w-5 lg:h-5 transition-transform group-hover:translate-x-1" />
-                    </a>
-                  )}
-                </div> */}
+                <p className="text-md sm:text-xl md:text-2xl text-slate-200 leading-relaxed max-w-3xl mx-auto">
+                  {banner.description}
+                </p>
               </div>
             ))}
           </div>
@@ -236,14 +209,16 @@ const Banner = () => {
           <>
             <button
               onClick={goToPrevious}
-              className="absolute left-4 sm:left-6 top-1/2 transform -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 bg-white/10 backdrop-blur-md text-white rounded-full hover:bg-white/20 transition-all duration-300 border border-white/20 opacity-0 group-hover:opacity-100 flex items-center justify-center"
+              className="absolute left-4 sm:left-6 top-1/2 transform -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 bg-white/20 backdrop-blur-md text-white rounded-full hover:bg-white/30 transition-all duration-300 border border-white/30 opacity-80 group-hover:opacity-100 flex items-center justify-center hover:scale-110 z-20"
+              aria-label="Previous slide"
             >
               <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
             
             <button
               onClick={goToNext}
-              className="absolute right-4 sm:right-6 top-1/2 transform -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 bg-white/10 backdrop-blur-md text-white rounded-full hover:bg-white/20 transition-all duration-300 border border-white/20 opacity-0 group-hover:opacity-100 flex items-center justify-center"
+              className="absolute right-4 sm:right-6 top-1/2 transform -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 bg-white/20 backdrop-blur-md text-white rounded-full hover:bg-white/30 transition-all duration-300 border border-white/30 opacity-80 group-hover:opacity-100 flex items-center justify-center hover:scale-110 z-20"
+              aria-label="Next slide"
             >
               <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
@@ -252,29 +227,31 @@ const Banner = () => {
 
         {/* Bottom Controls */}
         {activeBanners.length > 1 && (
-          <div className="absolute bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 flex items-center gap-4 sm:gap-6">
+          <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex items-center gap-6">
             {/* Play/Pause Button */}
             <button
               onClick={togglePlayPause}
-              className="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-md text-white rounded-full hover:bg-white/20 transition-all duration-300 border border-white/20 flex items-center justify-center"
+              className="w-12 h-12 bg-white/10 backdrop-blur-md text-white rounded-full hover:bg-white/20 transition-all duration-300 border border-white/20 flex items-center justify-center hover:scale-110"
+              aria-label={isAutoPlaying ? "Pause autoplay" : "Start autoplay"}
             >
               {isAutoPlaying ? (
-                <Pause className="w-4 h-4 sm:w-5 sm:h-5" />
+                <Pause className="w-5 h-5" />
               ) : (
-                <Play className="w-4 h-4 sm:w-5 sm:h-5" />
+                <Play className="w-5 h-5 ml-0.5" />
               )}
             </button>
 
             {/* Slide Indicators */}
-            <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-3">
               {activeBanners.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}
                   className="relative group"
+                  aria-label={`Go to slide ${index + 1}`}
                 >
                   <div
-                    className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-300 ${
+                    className={`w-4 h-4 rounded-full transition-all duration-300 ${
                       index === currentSlide
                         ? "bg-white scale-125"
                         : "bg-white/50 hover:bg-white/75"
@@ -282,7 +259,7 @@ const Banner = () => {
                   />
                   {index === currentSlide && (
                     <div
-                      className="absolute inset-0 w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 transition-all duration-100"
+                      className="absolute inset-0 w-4 h-4 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 transition-all duration-100"
                       style={{
                         clipPath: `inset(0 ${100 - progress}% 0 0)`,
                       }}
@@ -303,10 +280,6 @@ const Banner = () => {
             />
           </div>
         )}
-
-        {/* Decorative Elements */}
-        <div className="absolute top-8 right-8 w-16 h-16 sm:w-20 sm:h-20 bg-white/5 rounded-full animate-pulse"></div>
-        <div className="absolute bottom-16 left-8 w-12 h-12 sm:w-16 sm:h-16 bg-white/5 rounded-full animate-pulse delay-700"></div>
       </div>
     </div>
   )
