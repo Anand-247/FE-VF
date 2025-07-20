@@ -1,6 +1,9 @@
 export const generateWhatsAppMessage = (type, data) => {
   const { user, items, total, product, quantity } = data;
   console.log("WhatsApp Data:", data);
+  const baseUrl = window.location.origin;
+
+
 
   let message = `*🛒 Hello! I'd like to place an order.*\n\n`;
 
@@ -18,6 +21,7 @@ export const generateWhatsAppMessage = (type, data) => {
     message += `• Price: ₹${product.price}\n`;
     message += `• Quantity: ${quantity}\n`;
     message += `• Total: ₹${product.price * quantity}\n\n`;
+    message += `🔗 ${baseUrl}/product/${product.slug}\n\n`;
   } else if (type === "cart_checkout" && Array.isArray(items)) {
     message += `*🛒 Cart Items:*\n`;
 
@@ -26,6 +30,7 @@ export const generateWhatsAppMessage = (type, data) => {
       message += `   • Price: ₹${item.price}\n`;
       message += `   • Quantity: ${item.quantity}\n`;
       message += `   • Subtotal: ₹${item.price * item.quantity}\n\n`;
+      message += `   🔗 ${baseUrl}/product/${item.slug}\n\n`
     });
 
     message += `*💰 Total Amount: ₹${total}*\n\n`;

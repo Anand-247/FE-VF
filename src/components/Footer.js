@@ -48,7 +48,7 @@ const Footer = () => {
                 <div className="absolute -inset-1 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 rounded-xl blur opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
               </div>
               <div className="flex flex-col">
-                <span class="text-lg sm:text-xl md:text-2xl font-bold text-gray-400 bg-clip-text ">
+                <span className="text-lg sm:text-xl md:text-2xl font-bold text-gray-400 bg-clip-text ">
                   Verma
                 </span>
                 <span className="text-xs text-gray-500 font-medium -mt-1">Furniture Works</span>
