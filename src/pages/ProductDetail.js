@@ -4,16 +4,11 @@ import { useState, useEffect } from "react"
 import { useParams, Link } from "react-router-dom"
 import {
   ShoppingCart,
-  Heart,
   Star,
-  Truck,
-  Shield,
-  RotateCcw,
   Ruler,
   Package,
   Plus,
   Minus,
-  Share2,
   Eye,
   ChevronLeft,
   ChevronRight,
@@ -38,7 +33,6 @@ const ProductDetail = () => {
   const [showUserForm, setShowUserForm] = useState(false)
   const [selectedTab, setSelectedTab] = useState("description")
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
-  const [isWishlisted, setIsWishlisted] = useState(false)
   const [relatedProducts, setRelatedProducts] = useState([])
 
   useEffect(() => {
@@ -117,24 +111,6 @@ const ProductDetail = () => {
     setShowUserForm(false)
   }
 
-  const handleWishlist = () => {
-    setIsWishlisted(!isWishlisted)
-    toast.success(isWishlisted ? "Removed from wishlist" : "Added to wishlist")
-  }
-
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: product.name,
-        text: product.description,
-        url: window.location.href,
-      })
-    } else {
-      navigator.clipboard.writeText(window.location.href)
-      toast.success("Link copied to clipboard!")
-    }
-  }
-
   const formatPrice = (price) => {
     return new Intl.NumberFormat("en-IN", {
       style: "currency",
@@ -175,12 +151,6 @@ const ProductDetail = () => {
 
   const images =
     product.images?.length > 0 ? product.images : [{ url: "/placeholder.svg?height=500&width=500", alt: product.name }]
-
-  const features = [
-    { icon: Truck, title: "Free Shipping", description: "On orders over ₹25,000" },
-    { icon: Shield, title: "2 Year Warranty", description: "Comprehensive coverage" },
-    { icon: RotateCcw, title: "Easy Returns", description: "30-day return policy" },
-  ]
 
   return (
     <div className="min-h-screen bg-gray-50">

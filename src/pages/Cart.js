@@ -12,6 +12,7 @@ import toast from "react-hot-toast"
 
 const Cart = () => {
   const { items, updateQuantity, removeFromCart, getCartTotal, clearCart } = useCart()
+  console.log("🚀 ~ Cart ~ items:", items)
   const { user } = useUser()
   const [showCheckoutForm, setShowCheckoutForm] = useState(false)
   const [settings, setSettings] = useState({})
@@ -76,7 +77,7 @@ const Cart = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-gray-800 mb-8">Shopping Cart</h1>
+      <h1 className="text-xl md:text-3xl font-bold text-gray-800 mb-8">Shopping Cart</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Cart Items */}
@@ -85,11 +86,11 @@ const Cart = () => {
             {items.map((item) => (
               <div key={item._id} className="border rounded-xl p-4">
                 <div className="flex items-center space-x-4">
-                  {/* <img
-                    src={item.product.images?.[0]?.url || "/placeholder.svg?height=100&width=100"}
-                    alt={item.product.name}
-                    className="w-20 h-20 object-cover rounded-lg"
-                  /> */}
+                  <img
+                    src={item.images?.[0]?.url || "/placeholder.svg?height=100&width=100"}
+                    alt={item.name}
+                    className="w-14 h-16 object-cover rounded-lg"
+                  />
 
                   <div className="flex-1">
                     <h3 className="font-semibold text-gray-800 mb-1">

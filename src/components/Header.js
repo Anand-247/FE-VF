@@ -59,7 +59,7 @@ const Header = () => {
 
   const navigation = [
     { name: "Home", href: "/" },
-    { name: "Products", href: "/products" },
+    // { name: "Products", href: "/products" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ]
@@ -72,7 +72,7 @@ const Header = () => {
         isScrolled ? "bg-white/95 backdrop-blur-lg shadow-lg border-b border-gray-200/50" : "bg-white shadow-md"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between py-3">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 group">
@@ -126,6 +126,13 @@ const Header = () => {
 
               {isCategoriesOpen && (
                 <div className="absolute top-full left-0 mt-3 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 py-4 z-50 animate-fadeInUp">
+                  <button
+                    onClick={() => setIsCategoriesOpen(false)}
+                    className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 transition-colors duration-300"
+                    aria-label="Close categories"
+                  >
+                    <X size={20} />
+                  </button>
                   <div className="px-4 pb-3 border-b border-gray-100">
                     <h3 className="text-sm font-bold text-gray-900">Browse Categories</h3>
                     <p className="text-xs text-gray-500 mt-1">Discover our furniture collections</p>
@@ -161,7 +168,7 @@ const Header = () => {
                       </Link>
                     ))}
                   </div>
-                  <div className="border-t border-gray-100 pt-3 px-4">
+                  {/* <div className="border-t border-gray-100 pt-3 px-4">
                     <Link
                       to="/categories"
                       className="flex items-center justify-center space-x-2 w-full py-2 text-sm font-semibold text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-all duration-300"
@@ -170,7 +177,7 @@ const Header = () => {
                       <span>View All Categories</span>
                       <ChevronDown size={14} className="rotate-[-90deg]" />
                     </Link>
-                  </div>
+                  </div> */}
                 </div>
               )}
             </div>

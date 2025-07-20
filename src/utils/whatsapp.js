@@ -20,7 +20,7 @@ export const generateWhatsAppMessage = (type, data) => {
     message += `• Product: ${product.name}\n`;
     message += `• Price: ₹${product.price}\n`;
     message += `• Quantity: ${quantity}\n`;
-    message += `• Total: ₹${product.price * quantity}\n\n`;
+    message += `• Total: ₹${product.price * quantity}\n`;
     message += `🔗 ${baseUrl}/product/${product.slug}\n\n`;
   } else if (type === "cart_checkout" && Array.isArray(items)) {
     message += `*🛒 Cart Items:*\n`;
@@ -29,7 +29,7 @@ export const generateWhatsAppMessage = (type, data) => {
       message += `${index + 1}. ${item.name}\n`;
       message += `   • Price: ₹${item.price}\n`;
       message += `   • Quantity: ${item.quantity}\n`;
-      message += `   • Subtotal: ₹${item.price * item.quantity}\n\n`;
+      message += `   • Subtotal: ₹${item.price * item.quantity}\n`;
       message += `   🔗 ${baseUrl}/product/${item.slug}\n\n`
     });
 

@@ -110,7 +110,7 @@ const Banner = () => {
 
   if (loading) {
     return (
-      <div className="w-full max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 mb-8">
+      <div className="w-full max-w-9xl mx-auto p-4 sm:p-6 lg:p-8 mb-8">
         <div className="relative h-[400px] sm:h-[500px] lg:h-[600px] bg-gradient-to-br from-slate-100 to-slate-200 rounded-3xl overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10"></div>
           <div className="absolute inset-0 flex items-center justify-center">
@@ -129,7 +129,7 @@ const Banner = () => {
 
   if (!activeBanners.length) {
     return (
-      <div className="w-full max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 mb-8">
+      <div className="w-full max-w-9xl mx-auto p-4 sm:p-6 lg:p-8 mb-8">
         <div className="relative h-[400px] sm:h-[500px] lg:h-[600px] bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 rounded-3xl overflow-hidden">
           <div className="absolute inset-0 bg-black/20"></div>
           <div className="absolute inset-0 flex items-center justify-center p-6">
@@ -148,9 +148,9 @@ const Banner = () => {
   }
 
   return (
-    <div className="w-full max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 mb-8">
+    <div className="w-full max-w-9xl mx-auto p-4 sm:p-6 lg:p-8 mb-8">
       <div
-        className="relative h-[400px] sm:h-[500px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl group"
+        className="relative h-[200px] sm:h-[500px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl group"
         onMouseEnter={() => setIsAutoPlaying(false)}
         onMouseLeave={() => setIsAutoPlaying(true)}
       >
@@ -191,7 +191,7 @@ const Banner = () => {
                 }}
               >
                 {/* Main Title */}
-                <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight">
+                <h1 className="text-lg sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight">
                   {banner.title}
                 </h1>
 
@@ -209,18 +209,18 @@ const Banner = () => {
           <>
             <button
               onClick={goToPrevious}
-              className="absolute left-4 sm:left-6 top-1/2 transform -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 bg-white/20 backdrop-blur-md text-white rounded-full hover:bg-white/30 transition-all duration-300 border border-white/30 opacity-80 group-hover:opacity-100 flex items-center justify-center hover:scale-110 z-20"
+              className="absolute left-4 sm:left-6 top-1/2 transform -translate-y-1/2 w-8 h-8 sm:w-14 sm:h-14 bg-white/20 backdrop-blur-md text-white rounded-full hover:bg-white/30 transition-all duration-300 border border-white/30 opacity-80 group-hover:opacity-100 flex items-center justify-center hover:scale-110 z-20"
               aria-label="Previous slide"
             >
-              <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+              <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" />
             </button>
             
             <button
               onClick={goToNext}
-              className="absolute right-4 sm:right-6 top-1/2 transform -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 bg-white/20 backdrop-blur-md text-white rounded-full hover:bg-white/30 transition-all duration-300 border border-white/30 opacity-80 group-hover:opacity-100 flex items-center justify-center hover:scale-110 z-20"
+              className="absolute right-4 sm:right-6 top-1/2 transform -translate-y-1/2 w-8 h-8 sm:w-14 sm:h-14 bg-white/20 backdrop-blur-md text-white rounded-full hover:bg-white/30 transition-all duration-300 border border-white/30 opacity-80 group-hover:opacity-100 flex items-center justify-center hover:scale-110 z-20"
               aria-label="Next slide"
             >
-              <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+              <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
             </button>
           </>
         )}
@@ -231,13 +231,13 @@ const Banner = () => {
             {/* Play/Pause Button */}
             <button
               onClick={togglePlayPause}
-              className="w-12 h-12 bg-white/10 backdrop-blur-md text-white rounded-full hover:bg-white/20 transition-all duration-300 border border-white/20 flex items-center justify-center hover:scale-110"
+              className="w-8 sm:w-12 h-8 sm:h-12 bg-white/10 backdrop-blur-md text-white rounded-full hover:bg-white/20 transition-all duration-300 border border-white/20 flex items-center justify-center hover:scale-110"
               aria-label={isAutoPlaying ? "Pause autoplay" : "Start autoplay"}
             >
               {isAutoPlaying ? (
-                <Pause className="w-5 h-5" />
+                <Pause className="w-4 sm:w-5 h-4 sm:h-5" />
               ) : (
-                <Play className="w-5 h-5 ml-0.5" />
+                <Play className="w-4 sm:w-5 h-4 sm:h-5 ml-0.5" />
               )}
             </button>
 
@@ -251,7 +251,7 @@ const Banner = () => {
                   aria-label={`Go to slide ${index + 1}`}
                 >
                   <div
-                    className={`w-4 h-4 rounded-full transition-all duration-300 ${
+                    className={`w-3 sm:w-4 h-3 sm:h-4 rounded-full transition-all duration-300 ${
                       index === currentSlide
                         ? "bg-white scale-125"
                         : "bg-white/50 hover:bg-white/75"
@@ -259,7 +259,7 @@ const Banner = () => {
                   />
                   {index === currentSlide && (
                     <div
-                      className="absolute inset-0 w-4 h-4 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 transition-all duration-100"
+                      className="absolute inset-0 w-3 sm:w-4 h-3 sm:h-4 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 transition-all duration-100"
                       style={{
                         clipPath: `inset(0 ${100 - progress}% 0 0)`,
                       }}
