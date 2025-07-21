@@ -101,11 +101,14 @@ const Banner = () => {
     setProgress(0)
   }
 
-  const togglePlayPause = () => {
+  const togglePlayPause = (e) => {
+    e.stopPropagation()
+    e.preventDefault()
+    console.log("🚀 ~ togglePlayPause ~ isAutoPlaying:", isAutoPlaying)
     setIsAutoPlaying(!isAutoPlaying)
-    if (!isAutoPlaying) {
-      setProgress(0)
-    }
+    // if (!isAutoPlaying) {
+    //   setProgress(0)
+    // }
   }
 
   if (loading) {
@@ -151,8 +154,8 @@ const Banner = () => {
     <div className="w-full max-w-9xl mx-auto p-4 sm:p-6 lg:p-8 mb-8">
       <div
         className="relative h-[200px] sm:h-[500px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl group"
-        onMouseEnter={() => setIsAutoPlaying(false)}
-        onMouseLeave={() => setIsAutoPlaying(true)}
+        // onMouseEnter={() => setIsAutoPlaying(false)}
+        // onMouseLeave={() => setIsAutoPlaying(true)}
       >
         {/* Background Slides */}
         <div className="absolute inset-0">
@@ -227,9 +230,9 @@ const Banner = () => {
 
         {/* Bottom Controls */}
         {activeBanners.length > 1 && (
-          <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex items-center gap-6">
+          <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex items-center z-10 gap-6">
             {/* Play/Pause Button */}
-            <button
+            {/* <button
               onClick={togglePlayPause}
               className="w-8 sm:w-12 h-8 sm:h-12 bg-white/10 backdrop-blur-md text-white rounded-full hover:bg-white/20 transition-all duration-300 border border-white/20 flex items-center justify-center hover:scale-110"
               aria-label={isAutoPlaying ? "Pause autoplay" : "Start autoplay"}
@@ -239,7 +242,7 @@ const Banner = () => {
               ) : (
                 <Play className="w-4 sm:w-5 h-4 sm:h-5 ml-0.5" />
               )}
-            </button>
+            </button> */}
 
             {/* Slide Indicators */}
             <div className="flex items-center gap-3">

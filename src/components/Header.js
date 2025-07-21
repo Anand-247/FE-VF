@@ -73,7 +73,7 @@ const Header = () => {
       }`}
     >
       <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between py-3">
+        <div className="flex items-center justify-between py-3 gap-3">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 group">
             <div className="relative">
