@@ -114,7 +114,7 @@ const Banner = () => {
   if (loading) {
     return (
       <div className="w-full max-w-9xl mx-auto p-4 sm:p-6 lg:p-8 mb-8">
-        <div className="relative h-[400px] sm:h-[500px] lg:h-[600px] bg-gradient-to-br from-slate-100 to-slate-200 rounded-3xl overflow-hidden">
+        <div className="relative h-[250px] sm:h-[500px] lg:h-[600px] bg-gradient-to-br from-slate-100 to-slate-200 rounded-3xl overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10"></div>
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center space-y-4">
@@ -133,7 +133,7 @@ const Banner = () => {
   if (!activeBanners.length) {
     return (
       <div className="w-full max-w-9xl mx-auto p-4 sm:p-6 lg:p-8 mb-8">
-        <div className="relative h-[400px] sm:h-[500px] lg:h-[600px] bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 rounded-3xl overflow-hidden">
+        <div className="relative h-[250px] sm:h-[500px] lg:h-[600px] bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 rounded-3xl overflow-hidden">
           <div className="absolute inset-0 bg-black/20"></div>
           <div className="absolute inset-0 flex items-center justify-center p-6">
             <div className="text-center text-white max-w-2xl">
@@ -153,7 +153,7 @@ const Banner = () => {
   return (
     <div className="w-full max-w-9xl mx-auto p-4 sm:p-6 lg:p-8 mb-8">
       <div
-        className="relative h-[200px] sm:h-[500px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl group"
+        className="relative h-[250px] sm:h-[500px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl group"
         // onMouseEnter={() => setIsAutoPlaying(false)}
         // onMouseLeave={() => setIsAutoPlaying(true)}
       >
@@ -212,18 +212,18 @@ const Banner = () => {
           <>
             <button
               onClick={goToPrevious}
-              className="absolute left-4 sm:left-6 top-1/2 transform -translate-y-1/2 w-8 h-8 sm:w-14 sm:h-14 bg-white/20 backdrop-blur-md text-white rounded-full hover:bg-white/30 transition-all duration-300 border border-white/30 opacity-80 group-hover:opacity-100 flex items-center justify-center hover:scale-110 z-20"
+              className="absolute left-4 sm:left-6 top-1/2 transform -translate-y-1/2 w-10 h-10 sm:w-14 sm:h-14 bg-white/20 backdrop-blur-md text-white rounded-full hover:bg-white/30 transition-all duration-300 border border-white/30 opacity-80 group-hover:opacity-100 flex items-center justify-center hover:scale-110 z-20"
               aria-label="Previous slide"
             >
-              <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" />
+              <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
             
             <button
               onClick={goToNext}
-              className="absolute right-4 sm:right-6 top-1/2 transform -translate-y-1/2 w-8 h-8 sm:w-14 sm:h-14 bg-white/20 backdrop-blur-md text-white rounded-full hover:bg-white/30 transition-all duration-300 border border-white/30 opacity-80 group-hover:opacity-100 flex items-center justify-center hover:scale-110 z-20"
+              className="absolute right-4 sm:right-6 top-1/2 transform -translate-y-1/2 w-10 h-10 sm:w-14 sm:h-14 bg-white/20 backdrop-blur-md text-white rounded-full hover:bg-white/30 transition-all duration-300 border border-white/30 opacity-80 group-hover:opacity-100 flex items-center justify-center hover:scale-110 z-20"
               aria-label="Next slide"
             >
-              <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
+              <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
           </>
         )}

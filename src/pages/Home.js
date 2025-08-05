@@ -138,7 +138,7 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-12">
             <div>
-              <h2 className="text-lg sm:text-3xl font-bold text-gray-900 mb-4">Shop by Category</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">Shop by Category</h2>
               <p className="text-gray-600 text-sm sm:text-lg">Discover our carefully curated furniture collections</p>
             </div>
             {/* <Link
@@ -156,7 +156,7 @@ const Home = () => {
             ))}
           </div>
 
-          <div className="text-center mt-8 md:hidden">
+          {/* <div className="text-center mt-8 md:hidden">
             <Link
               to="/categories"
               className="inline-flex items-center space-x-2 bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors duration-200"
@@ -164,7 +164,7 @@ const Home = () => {
               <span className="text-sm sm:text-lg">View All Categories</span>
               <ArrowRight size={18} />
             </Link>
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -173,7 +173,7 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-12">
             <div>
-              <h2 className="text-lg sm:text-3xl font-bold text-gray-900 mb-4">Featured Products</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">Featured Products</h2>
               <p className="text-sm sm:text-lg text-gray-600">Handpicked favorites from our premium collection</p>
             </div>
             {/* <Link

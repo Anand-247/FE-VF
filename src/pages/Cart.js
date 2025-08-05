@@ -55,7 +55,7 @@ const Cart = () => {
 
     // Optionally clear cart after successful checkout
     // clearCart()
-    toast.success("WhatsApp message sent! We'll contact you soon.")
+    toast.success("WhatsApp message sent! We'll contactnpm you soon.")
   }
 
   if (items.length === 0) {
